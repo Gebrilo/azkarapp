@@ -1,4 +1,3 @@
-import 'package:audioplayers/audio_cache.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 
@@ -34,7 +33,6 @@ class _LocalAudio extends State<LocalAudio> {
   Duration _duration = const Duration();
   Duration _position = const Duration();
   late AudioPlayer advancedPlayer;
-  late AudioCache audioCache;
 
   @override
   void initState() {
@@ -44,13 +42,12 @@ class _LocalAudio extends State<LocalAudio> {
 
   void initPlayer() {
     advancedPlayer = AudioPlayer();
-    audioCache = AudioCache(fixedPlayer: advancedPlayer);
 
     advancedPlayer.onDurationChanged.listen((d) => setState(() {
           _duration = d;
         }));
 
-    advancedPlayer.onAudioPositionChanged.listen((p) => setState(() {
+    advancedPlayer.onPositionChanged.listen((p) => setState(() {
           _position = p;
         }));
   }
@@ -70,8 +67,7 @@ class _LocalAudio extends State<LocalAudio> {
             ),
             child: icon,
             onPressed: onPressed),
-      ),
-    ;
+      );
   }
 
 
@@ -149,7 +145,7 @@ class _LocalAudio extends State<LocalAudio> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: <Widget>[
-                _btn(const Icon(Icons.play_arrow), () => audioCache.play('$btn1SelectedVal.mp3')),
+                _btn(const Icon(Icons.play_arrow), () => advancedPlayer.play(AssetSource('$btn1SelectedVal.mp3'))),
                 _btn(const Icon(Icons.pause), () => advancedPlayer.pause()),
                 _btn(const Icon(Icons.stop), () => advancedPlayer.stop()),
               ],)

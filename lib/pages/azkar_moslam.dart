@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../widget/card_name.dart';
 import '../pages/index_page.dart';

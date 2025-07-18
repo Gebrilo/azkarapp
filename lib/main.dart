@@ -2,8 +2,6 @@ import './splash_screen.dart';
 import 'package:flutter/material.dart';
 import './pages/home_page.dart';
 
-
-
 void main() => runApp(const MyApp());
 
 class MyApp extends StatelessWidget {
@@ -18,11 +16,13 @@ class MyApp extends StatelessWidget {
       },
       title: 'Flutter Demo',
       theme: ThemeData(
+        primarySwatch: Colors.grey,
         colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.grey).copyWith(
           secondary: const Color(0xffe5b620),
           primary: const Color(0xff2c2c2c),
-          background: const Color(0xffe5b620),
         ),
+        // To make the surface color available throughout the app if needed
+        scaffoldBackgroundColor: const Color(0xffe5b620), 
       ),
       home: const SplashScreen(),
     );

@@ -3,26 +3,25 @@ import '../pages/azkar_sbah.dart';
 import '../pages/azkar_masaa.dart';
 import '../pages/azkar_moslam.dart';
 import '../pages/name_of_alah.dart';
-import '../pages/counter.dart';
 
 import '../widget/card_name.dart';
 
 
 class HomeContant extends StatelessWidget {
   const HomeContant({
-    Key key, this.title
-  }) : super(key: key);
+    super.key, required this.title
+  });
   final String title;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Align(alignment: Alignment.center, child: Text(title)),
+        title: Text(title),
+        centerTitle: true,
       ),
       body: Container(
-        decoration: BoxDecoration(
-          color: Theme.of(context).primaryColor,
+        decoration: const BoxDecoration(
           image: DecorationImage(
             image: AssetImage("assets/images/back_ground.jpg"),
             fit: BoxFit.cover,
@@ -38,7 +37,7 @@ class HomeContant extends StatelessWidget {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => AzkarSbah(
+                          builder: (context) => const AzkarSbah(
                             title: 'أذكار الصباح',
                             file: 'azkar_sbah',
                           )));
@@ -50,7 +49,7 @@ class HomeContant extends StatelessWidget {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => AzkarMasaa(
+                          builder: (context) => const AzkarMasaa(
                             title: 'أذكار المساء',
                             file: 'azkar_masa',
                           )));
@@ -60,7 +59,7 @@ class HomeContant extends StatelessWidget {
                 name: 'أذكار المسلم',
                 onTap: () {
                   Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => AzkarMoslam()));
+                      MaterialPageRoute(builder: (context) => const AzkarMoslam()));
                 },
               ),
               CardName(
@@ -69,7 +68,7 @@ class HomeContant extends StatelessWidget {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => NameOfAlah(
+                          builder: (context) => const NameOfAlah(
                             title: "أسماء اللّه 99",
                           )));
                 },

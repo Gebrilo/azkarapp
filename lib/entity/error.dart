@@ -33,7 +33,7 @@ class LocationErrorWidget extends StatelessWidget {
             ElevatedButton(
               child: const Text("Retry"),
               onPressed: () {
-                if (callback != null) callback();
+                callback();
               },
             )
           ],
