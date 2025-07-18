@@ -7,11 +7,11 @@ class Azkar {
   String zekr;
 
   Azkar({
-    this.count,
-    this.zekr,
-    this.category,
-    this.description,
-    this.reference,
+    required this.count,
+    required this.zekr,
+    required this.category,
+    required this.description,
+    required this.reference,
   });
 
   factory Azkar.fromJson(Map<String, dynamic> json) {
@@ -24,11 +24,11 @@ class Azkar {
   }
 }
 
-List<Azkar> parseJson(String response) {
+List<Azkar> parseJson(String? response) {
   if (response == null) {
     return [];
   }
   final parsed =
-  json.decode(response.toString()).cast<Map<String, dynamic>>();
+  json.decode(response).cast<Map<String, dynamic>>();
   return parsed.map<Azkar>((json) => Azkar.fromJson(json)).toList();
 }

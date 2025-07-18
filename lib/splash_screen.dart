@@ -2,6 +2,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 class SplashScreen extends StatefulWidget {
+  const SplashScreen({super.key});
+
   @override
   createState() => _SplashScreenState();
 }
@@ -9,7 +11,7 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
-    Timer(Duration(seconds: 5),
+    Timer(const Duration(seconds: 5),
         () => Navigator.pushReplacementNamed(context, 'home'));
     super.initState();
   }
@@ -26,7 +28,7 @@ class _SplashScreenState extends State<SplashScreen> {
         fit: StackFit.expand,
         children: <Widget>[
           Container(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               image: DecorationImage(
                   image: AssetImage("assets/images/logo.jpg"),
                   fit: BoxFit.cover),
@@ -44,13 +46,13 @@ class _SplashScreenState extends State<SplashScreen> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    Text(
+                    const Text(
                       "بِسْم اللَّـهِ الرَّحْمَـٰنِ الرَّحِيمِ",
                       style: TextStyle(fontSize: 28, color: Colors.white),
                     ),
-                    CircularProgressIndicator(),
-                    Padding(
-                      padding: EdgeInsets.only(top: 15.0),
+                    const CircularProgressIndicator(),
+                    const SizedBox(
+                      height: 15.0,
                     ),
                   ],
                 ),

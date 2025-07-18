@@ -6,16 +6,18 @@ import '../pages/index_page.dart';
 
 
 class AzkarMoslam extends StatelessWidget {
+  const AzkarMoslam({super.key});
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: Text("أذكار المسلم"),
+          title: const Text("أذكار المسلم"),
+          centerTitle: true,
         ),
         body: Container(
-          decoration: BoxDecoration(
-            color: Theme.of(context).primaryColor,
+          decoration: const BoxDecoration(
             image: DecorationImage(
               image: AssetImage("assets/images/back_ground.jpg"),
               fit: BoxFit.cover,
@@ -31,7 +33,7 @@ class AzkarMoslam extends StatelessWidget {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => IndexPage(
+                            builder: (context) => const IndexPage(
                                   title: 'أذكار الاستيقاظ من النوم',
                                   file: 'azkar_alnoom',
                                 )));
@@ -43,7 +45,7 @@ class AzkarMoslam extends StatelessWidget {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => IndexPage(
+                            builder: (context) => const IndexPage(
                                   title: "أذكار الوضوء",
                                   file: 'al_wdooa',
                                 )));
@@ -55,7 +57,7 @@ class AzkarMoslam extends StatelessWidget {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => IndexPage(
+                            builder: (context) => const IndexPage(
                                   title: "أذكار المسجد",
                                   file: 'al_masjed',
                                 )));
@@ -67,7 +69,7 @@ class AzkarMoslam extends StatelessWidget {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => IndexPage(
+                            builder: (context) => const IndexPage(
                                   title: "أذكار الصلاه",
                                   file: 'azkar_salah',
                                 )));
@@ -79,7 +81,7 @@ class AzkarMoslam extends StatelessWidget {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => IndexPage(
+                            builder: (context) => const IndexPage(
                                   title: "أذكار اخرى",
                                   file: 'azkar',
                                 )));

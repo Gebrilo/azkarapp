@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import './button.dart';
 
 class DropdownButtonMenu extends StatefulWidget {
-  const DropdownButtonMenu({Key key}) : super(key: key);
+  const DropdownButtonMenu({super.key});
 
   @override
   State<StatefulWidget> createState() => _DropdownButtonMenuState();
@@ -52,48 +52,52 @@ class _DropdownButtonMenuState extends State<DropdownButtonMenu> {
         children: <Widget>[
           Center(
             child: Container(
-              padding: EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(8.0),
               decoration: BoxDecoration(
                   shape: BoxShape.rectangle,
-                  border: Border.all(color: Theme.of(context).accentColor),
-                  borderRadius: BorderRadius.all(Radius.circular(10.5))
+                  border: Border.all(color: Theme.of(context).colorScheme.secondary),
+                  borderRadius: const BorderRadius.all(Radius.circular(10.5))
               ),
-              child: Text(_btn1SelectedVal, style: TextStyle(color: Colors.white, fontSize: 35),),
+              child: Text(_btn1SelectedVal, style: const TextStyle(color: Colors.white, fontSize: 35),),
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 10,
           ),
             ListTile(
-              title: Text('أختار :', style: TextStyle(color: Theme.of(context).accentColor, fontSize: 20, fontWeight: FontWeight.bold),),
+              title: Text('أختار :', style: TextStyle(color: Theme.of(context).colorScheme.secondary, fontSize: 20, fontWeight: FontWeight.bold),),
               trailing: DropdownButton<String>(
                 // Must be one of items.value.
-                style: TextStyle(color: Theme.of(context).accentColor, fontSize: 18, fontWeight: FontWeight.bold),
+                style: TextStyle(color: Theme.of(context).colorScheme.secondary, fontSize: 18, fontWeight: FontWeight.bold),
                 value: _btn1SelectedVal,
-                onChanged: (String newValue) {
-                  setState(() {
-                    _btn1SelectedVal = newValue;
-                  });
+                onChanged: (String? newValue) {
+                  if (newValue != null) {
+                    setState(() {
+                      _btn1SelectedVal = newValue;
+                    });
+                  }
                 },
-                items: this._dropDownMenuItems,
+                items: _dropDownMenuItems,
               ),
             ),
-          SizedBox(height: 15,),
+          const SizedBox(height: 15,),
           ListTile(
-            title: Text('مرات التكرار :', style: TextStyle(color: Theme.of(context).accentColor, fontSize: 20, fontWeight: FontWeight.bold),),
+            title: Text('مرات التكرار :', style: TextStyle(color: Theme.of(context).colorScheme.secondary, fontSize: 20, fontWeight: FontWeight.bold),),
             trailing: DropdownButton<String>(
               // Must be one of items.value.
-              style: TextStyle(color: Theme.of(context).accentColor, fontSize: 18, fontWeight: FontWeight.bold),
+              style: TextStyle(color: Theme.of(context).colorScheme.secondary, fontSize: 18, fontWeight: FontWeight.bold),
               value: _btn2SelectedVal,
-              onChanged: (String newValue) {
-                setState(() {
-                  _btn2SelectedVal = newValue;
-                });
+              onChanged: (String? newValue) {
+                if (newValue != null) {
+                  setState(() {
+                    _btn2SelectedVal = newValue;
+                  });
+                }
               },
-              items: this._dropDownMenuCounter,
+              items: _dropDownMenuCounter,
             ),
           ),
-          SizedBox(height: 145,),
+          const SizedBox(height: 145,),
           CounterButton(counnt: _btn2SelectedVal,),
         ],
       ),

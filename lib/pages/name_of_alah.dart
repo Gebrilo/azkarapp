@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import '../entity/names.dart';
+import '../entity/names.dart' as names_entity;
 
 
 class NameOfAlah extends StatelessWidget {
-  NameOfAlah({Key key, this.title}) : super(key: key);
+  const NameOfAlah({super.key, required this.title});
 
   final String title;
   @override
@@ -12,11 +12,12 @@ class NameOfAlah extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           title: Text(title),
+          centerTitle: true,
         ),
         body: Container(
           decoration: BoxDecoration(
             color: Theme.of(context).primaryColor,
-            image: DecorationImage(
+            image: const DecorationImage(
               image: AssetImage("assets/images/a_ground.jpg"),
               fit: BoxFit.cover,
             ),
@@ -28,7 +29,7 @@ class NameOfAlah extends StatelessWidget {
                     .loadString('assets/json/name_of_alah.json'),
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
-                    List<Names> NamesList = parseJson(snapshot.data.toString());
+                    List<names_entity.Names> NamesList = names_entity.parseJson(snapshot.data as String);
                     return NamesList.isNotEmpty
                         ? ListView.builder(
                       scrollDirection: Axis.vertical,
@@ -36,32 +37,33 @@ class NameOfAlah extends StatelessWidget {
                       itemBuilder: (BuildContext context, int index) =>
                           Card(
                             elevation: 0.7,
-                            color: Color(0xff2c2c2c),
+                            color: const Color(0xff2c2c2c),
                             child: Column(
                               textDirection: TextDirection.rtl,
                               children: <Widget>[
                                 Container(
+                                  padding: const EdgeInsets.all(8.0),
                                   child: Text(
                                     NamesList[index].name,
                                     style: TextStyle(
-                                        color: Theme.of(context).accentColor,
+                                        color: Theme.of(context).colorScheme.secondary,
                                         fontSize: 29),
                                   ),
                                 ),
                                 ListTile(
                                   title: Text(
                                     NamesList[index].transliteration,
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                         color: Colors.white, fontSize: 21),
                                   ),
                                   subtitle: Text(
                                     NamesList[index].meaning,
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                         color: Colors.white, fontSize: 16),
                                   ),
                                   leading: CircleAvatar(
                                     backgroundColor:
-                                    Theme.of(context).accentColor,
+                                    Theme.of(context).colorScheme.secondary,
                                     child: Text(
                                       NamesList[index].number.toString(),
                                       style: TextStyle(color: Theme.of(context).primaryColor),),
@@ -71,9 +73,9 @@ class NameOfAlah extends StatelessWidget {
                             ),
                           ),
                     )
-                        : Center(child: CircularProgressIndicator());
+                        : const Center(child: CircularProgressIndicator());
                   } else {
-                    return Center(child: CircularProgressIndicator());
+                    return const Center(child: CircularProgressIndicator());
                   }
                 }),
           ),
@@ -82,4 +84,3 @@ class NameOfAlah extends StatelessWidget {
     );
   }
 }
-

@@ -5,8 +5,7 @@ import 'package:flutter/material.dart';
 typedef void OnError(Exception exception);
 
 class LocalAudio extends StatefulWidget {
-  LocalAudio({this.fileName});
-  String fileName;
+  const LocalAudio({super.key});
 
   @override
   _LocalAudio createState() => _LocalAudio();
@@ -32,10 +31,10 @@ class _LocalAudio extends State<LocalAudio> {
 
   String btn1SelectedVal = 'azkar-al-sbah';
 
-  Duration _duration = new Duration();
-  Duration _position = new Duration();
-  AudioPlayer advancedPlayer;
-  AudioCache audioCache;
+  Duration _duration = const Duration();
+  Duration _position = const Duration();
+  late AudioPlayer advancedPlayer;
+  late AudioCache audioCache;
 
   @override
   void initState() {
@@ -44,43 +43,42 @@ class _LocalAudio extends State<LocalAudio> {
   }
 
   void initPlayer() {
-    advancedPlayer = new AudioPlayer();
-    audioCache = new AudioCache(fixedPlayer: advancedPlayer);
+    advancedPlayer = AudioPlayer();
+    audioCache = AudioCache(fixedPlayer: advancedPlayer);
 
-    advancedPlayer.durationHandler = (d) => setState(() {
+    advancedPlayer.onDurationChanged.listen((d) => setState(() {
           _duration = d;
-        });
+        }));
 
-    advancedPlayer.positionHandler = (p) => setState(() {
+    advancedPlayer.onAudioPositionChanged.listen((p) => setState(() {
           _position = p;
-        });
+        }));
   }
 
-  String localFilePath;
+  String? localFilePath;
 
 /// audio button
   Widget _btn(Icon icon, VoidCallback onPressed) {
-    return ButtonTheme(
-      minWidth: 48.0,
-      child: Container(
-        width: 100,
-        height: 45,
-        child: RaisedButton(
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),
+    return SizedBox(
+      width: 100,
+      height: 45,
+      child: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),
+              backgroundColor: Theme.of(context).colorScheme.secondary,
+              foregroundColor: Colors.white,
+            ),
             child: icon,
-            color: Theme.of(context).accentColor,
-            textColor: Colors.white,
             onPressed: onPressed),
       ),
-    );
+    ;
   }
 
 
   /// slider track
   Widget slider() {
     return Slider(
-        activeColor: Theme.of(context).accentColor,
+        activeColor: Theme.of(context).colorScheme.secondary,
         inactiveColor: Colors.white,
         value: _position.inSeconds.toDouble(),
         min: 0.0,
@@ -88,7 +86,7 @@ class _LocalAudio extends State<LocalAudio> {
         onChanged: (double value) {
           setState(() {
             seekToSecond(value.toInt());
-            value = value;
+            // value = value; // This line is redundant
           });
         });
   }
@@ -96,17 +94,19 @@ class _LocalAudio extends State<LocalAudio> {
   /// drop down menu for azkar audio
   Widget listTile(){
     return ListTile(
-      title: Text('أختار :', style: TextStyle(color: Theme.of(context).accentColor, fontSize: 25, fontWeight: FontWeight.bold),),
+      title: Text('أختار :', style: TextStyle(color: Theme.of(context).colorScheme.secondary, fontSize: 25, fontWeight: FontWeight.bold),),
       trailing: DropdownButton<String>(
         // Must be one of items.value.
-        style: TextStyle(color: Theme.of(context).accentColor, fontSize: 28, fontWeight: FontWeight.bold),
+        style: TextStyle(color: Theme.of(context).colorScheme.secondary, fontSize: 28, fontWeight: FontWeight.bold),
         value: btn1SelectedVal,
-        onChanged: (String newValue) {
-          setState(() {
-            btn1SelectedVal = newValue;
-          });
+        onChanged: (String? newValue) {
+          if (newValue != null) {
+            setState(() {
+              btn1SelectedVal = newValue;
+            });
+          }
         },
-        items: this._dropDownMenuItems,
+        items: _dropDownMenuItems,
       ),
     );
   }
@@ -120,13 +120,18 @@ class _LocalAudio extends State<LocalAudio> {
   }
 
   @override
+  void dispose() {
+    advancedPlayer.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return DefaultTabController(
       length: 1,
       child: Scaffold(
         body: Container(
-          decoration: BoxDecoration(
-            color: Theme.of(context).primaryColor,
+          decoration: const BoxDecoration(
             image: DecorationImage(
               image: AssetImage("assets/images/a_ground.jpg"),
               fit: BoxFit.cover,
@@ -136,17 +141,17 @@ class _LocalAudio extends State<LocalAudio> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               listTile(),
-              SizedBox(
+              const SizedBox(
                 height: 15,
               ),
               slider(),
-              SizedBox(height: 15,),
+              const SizedBox(height: 15,),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: <Widget>[
-                _btn(Icon(Icons.play_arrow), () => audioCache.play('$btn1SelectedVal.mp3')),
-                _btn(Icon(Icons.pause), () => advancedPlayer.pause()),
-                _btn(Icon(Icons.stop), () => advancedPlayer.stop()),
+                _btn(const Icon(Icons.play_arrow), () => audioCache.play('$btn1SelectedVal.mp3')),
+                _btn(const Icon(Icons.pause), () => advancedPlayer.pause()),
+                _btn(const Icon(Icons.stop), () => advancedPlayer.stop()),
               ],)
             ],
           )

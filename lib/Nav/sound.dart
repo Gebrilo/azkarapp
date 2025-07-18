@@ -2,24 +2,25 @@ import 'package:flutter/material.dart';
 import '../widget/audio_player.dart';
 
 class Sound extends StatelessWidget {
-  Sound({this.title});
+  const Sound({super.key, required this.title});
   final String title;
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: Align(alignment: Alignment.center, child: Text(title)),
+          title: Text(title),
+          centerTitle: true,
         ),
         body: Container(
           decoration: BoxDecoration(
             color: Theme.of(context).primaryColor,
-            image: DecorationImage(
+            image: const DecorationImage(
               image: AssetImage("assets/images/ground.jpg"),
               fit: BoxFit.cover,
             ),
           ),
-          child: LocalAudio(),
+          child: const LocalAudio(),
         ),
       ),
     );

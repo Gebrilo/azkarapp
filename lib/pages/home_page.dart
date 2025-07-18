@@ -7,7 +7,7 @@ import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 
 class MyHomePage extends StatefulWidget {
 
-  MyHomePage({Key key, this.title}) : super(key: key);
+  const MyHomePage({super.key, required this.title});
 
   final String title;
 
@@ -20,13 +20,13 @@ class _MyHomePageState extends State<MyHomePage> {
 
   /// List of screen of navbar
   List<Widget> screens = [
-    Counter(
+    const Counter(
       title: 'السبحه',
     ),
-    HomeContant(
+    const HomeContant(
       title: 'أذكار المسلم',
     ),
-    Sound(
+    const Sound(
       title: 'أذكار صوتية',
     )
   ];
@@ -38,7 +38,7 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
-  GlobalKey _bottomNavigationKey = GlobalKey();
+  final GlobalKey<CurvedNavigationBarState> _bottomNavigationKey = GlobalKey();
 
   @override
   Widget build(BuildContext context) {
@@ -50,11 +50,11 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
         bottomNavigationBar: CurvedNavigationBar(
           key: _bottomNavigationKey,
-          backgroundColor: Theme.of(context).accentColor,
+          backgroundColor: Theme.of(context).colorScheme.secondary,
           buttonBackgroundColor: Theme.of(context).primaryColor,
           color: Theme.of(context).primaryColor,
           height: 70,
-          items: <Widget>[
+          items: const <Widget>[
             Icon(
               Icons.grade,
               size: 30,
@@ -71,7 +71,7 @@ class _MyHomePageState extends State<MyHomePage> {
               color: Colors.white,
             ),
           ],
-          animationDuration: Duration(
+          animationDuration: const Duration(
             milliseconds: 200,
           ),
           animationCurve: Curves.bounceInOut,

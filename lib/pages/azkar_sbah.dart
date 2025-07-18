@@ -1,10 +1,10 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import '../entity/azkar.dart';
+import '../entity/azkar.dart' as azkar_entity;
 
 
 class AzkarSbah extends StatelessWidget {
-  AzkarSbah({Key key, this.title , this.file}) : super(key: key);
+  const AzkarSbah({super.key, required this.title , required this.file});
 
   final String title;
   final String file;
@@ -14,11 +14,12 @@ class AzkarSbah extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           title: Text(title),
+          centerTitle: true,
         ),
         body: Container(
           decoration: BoxDecoration(
             color: Theme.of(context).primaryColor,
-            image: DecorationImage(
+            image: const DecorationImage(
               image: AssetImage("assets/images/d_ground.jpg"),
               fit: BoxFit.cover,
             ),
@@ -30,23 +31,23 @@ class AzkarSbah extends StatelessWidget {
                     .loadString('assets/json/$file.json'),
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
-                    List<Azkar> azkarList = parseJson(snapshot.data.toString());
+                    List<azkar_entity.Azkar> azkarList = azkar_entity.parseJson(snapshot.data as String);
                     return azkarList.isNotEmpty
                         ? ListView.builder(
                       itemCount: azkarList.length,
                       itemBuilder: (BuildContext context, int index) => Card(
                         elevation: 0.7,
-                        color: Color(0xff2c2c2c),
+                        color: const Color(0xff2c2c2c),
                         child: ListTile(
-                          title: Text(azkarList[index].zekr, style: TextStyle(color: Colors.white ,fontSize: 19),),
-                          subtitle: Text(azkarList[index].description, style: TextStyle(color: Color(0xffe5b620)),),
-                          leading: Text(azkarList[index].count, style: TextStyle(color: Color(0xffe5b620)),),
+                          title: Text(azkarList[index].zekr, style: const TextStyle(color: Colors.white ,fontSize: 19),),
+                          subtitle: Text(azkarList[index].description, style: const TextStyle(color: Color(0xffe5b620)),),
+                          leading: Text(azkarList[index].count, style: const TextStyle(color: Color(0xffe5b620)),),
                         ),
                       ),
                     )
-                        :  Center(child: CircularProgressIndicator());
+                        :  const Center(child: CircularProgressIndicator());
                   } else {
-                    return Center(child: CircularProgressIndicator());
+                    return const Center(child: CircularProgressIndicator());
                   }
                 }),
 
@@ -54,13 +55,5 @@ class AzkarSbah extends StatelessWidget {
         ),
       ),
     );
-  }
-  List<Azkar> parseJson(String response) {
-    if (response == null) {
-      return [];
-    }
-    final parsed =
-    json.decode(response.toString()).cast<Map<String, dynamic>>();
-    return parsed.map<Azkar>((json) => Azkar.fromJson(json)).toList();
   }
 }

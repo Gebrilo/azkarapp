@@ -3,7 +3,7 @@ import '../widget/drop_down.dart';
 
 
 class Counter extends StatelessWidget {
-  Counter({Key key, this.title}) : super(key: key);
+  const Counter({super.key, required this.title});
 
   final String title;
   @override
@@ -15,14 +15,13 @@ class Counter extends StatelessWidget {
           centerTitle: true,
         ),
         body: Container(
-          decoration: BoxDecoration(
-            color: Theme.of(context).primaryColor,
+          decoration: const BoxDecoration(
             image: DecorationImage(
               image: AssetImage("assets/images/ground.jpg"),
               fit: BoxFit.cover,
             ),
           ),
-          child: Column(
+          child: const Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
@@ -35,4 +34,3 @@ class Counter extends StatelessWidget {
     );
   }
 }
-

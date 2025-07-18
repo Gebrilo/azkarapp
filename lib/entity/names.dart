@@ -6,7 +6,11 @@ class Names{
   int number;
   String meaning;
 
-  Names({this.name,this.transliteration, this.number ,this.meaning});
+  Names({
+    required this.name,
+    required this.transliteration,
+    required this.number,
+    required this.meaning});
 
 
   factory Names.fromJson(Map<String, dynamic> json) {
@@ -18,11 +22,11 @@ class Names{
         );
   }
 }
-List<Names> parseJson(String response) {
+List<Names> parseJson(String? response) {
   if (response == null) {
     return [];
   }
   final parsed =
-  json.decode(response.toString()).cast<Map<String, dynamic>>();
+  json.decode(response).cast<Map<String, dynamic>>();
   return parsed.map<Names>((json) => Names.fromJson(json)).toList();
 }
