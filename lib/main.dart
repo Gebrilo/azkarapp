@@ -1,6 +1,6 @@
-import './splash_screen.dart';
+import 'package:azkarapp/features/home/pages/splash_screen.dart';
 import 'package:flutter/material.dart';
-import './pages/home_page.dart';
+import 'package:azkarapp/features/home/pages/home_page.dart';
 
 void main() => runApp(const MyApp());
 
@@ -14,15 +14,23 @@ class MyApp extends StatelessWidget {
       routes: {
         'home': (context) => const MyHomePage(title: 'أذكار المسلم'),
       },
-      title: 'Flutter Demo',
+      title: 'أذكار المسلم',
       theme: ThemeData(
-        primarySwatch: Colors.grey,
-        colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.grey).copyWith(
+        // Using ColorScheme.fromSeed is the modern and recommended way to
+        // create a color scheme that is consistent and visually appealing.
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: const Color(0xff2c2c2c),
           secondary: const Color(0xffe5b620),
           primary: const Color(0xff2c2c2c),
+          background: const Color(0xffe5b620)
         ),
-        // To make the surface color available throughout the app if needed
-        scaffoldBackgroundColor: const Color(0xffe5b620), 
+        scaffoldBackgroundColor: const Color(0xffe5b620),
+        appBarTheme: const AppBarTheme(
+          backgroundColor: Color(0xff2c2c2c),
+          foregroundColor: Colors.white,
+          centerTitle: true, // Center title globally
+        ),
+        useMaterial3: true,
       ),
       home: const SplashScreen(),
     );
