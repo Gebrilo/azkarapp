@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
+import 'package:logging/logging.dart';
 
 class LocalAudio extends StatefulWidget {
   const LocalAudio({super.key});
@@ -15,6 +16,8 @@ class _LocalAudioState extends State<LocalAudio> {
   bool _isPlaying = false;
   Duration _duration = Duration.zero;
   Duration _position = Duration.zero;
+
+  final _logger = Logger('_LocalAudioState');
 
   final Map<String, String> _audioUrls = {
     'أذكار الصباح والمساء': 'http://www.hisnmuslim.com/audio/ar/ar_7esn_AlMoslem_by_Doors_028.mp3',
@@ -56,22 +59,42 @@ class _LocalAudioState extends State<LocalAudio> {
         });
       }
     });
+
+    Logger.root.level = Level.ALL; // Set the logging level
+    Logger.root.onRecord.listen((record) {
+      print('${record.level.name}: ${record.time}: ${record.message}');
+    });
+
   }
 
   Future<void> _play() async {
-    if (_selectedAudioUrl == null) return;
+    if (_selectedAudioUrl == null) {
+      _logger.info('_play called with null _selectedAudioUrl');
+      return;
+    }
+
+    _logger.info('_play called with URL: $_selectedAudioUrl');
 
     if (kIsWeb) {
       // For web, stream directly from the URL
+      _logger.info('Playing from URL (Web): $_selectedAudioUrl');
       await _audioPlayer.play(UrlSource(_selectedAudioUrl!));
     } else {
       // For mobile, use the cache
-      final fileInfo = await DefaultCacheManager().getFileFromCache(_selectedAudioUrl!);
-      if (fileInfo != null) {
-        await _audioPlayer.play(DeviceFileSource(fileInfo.file.path));
-      } else {
-        final file = await DefaultCacheManager().getSingleFile(_selectedAudioUrl!);
-        await _audioPlayer.play(DeviceFileSource(file.path));
+      _logger.info('Attempting to play from cache (Mobile): $_selectedAudioUrl');
+      try {
+        final fileInfo = await DefaultCacheManager().getFileFromCache(_selectedAudioUrl!);
+        if (fileInfo != null) {
+          _logger.info('File found in cache. Playing from file: ${fileInfo.file.path}');
+          await _audioPlayer.play(DeviceFileSource(fileInfo.file.path));
+        } else {
+          _logger.info('File not found in cache. Downloading and playing: $_selectedAudioUrl');
+          final file = await DefaultCacheManager().getSingleFile(_selectedAudioUrl!);
+          _logger.info('File downloaded. Playing from file: ${file.path}');
+          await _audioPlayer.play(DeviceFileSource(file.path));
+        }
+      } catch (e) {
+        _logger.severe('Error during audio playback: $e');
       }
     }
   }
