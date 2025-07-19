@@ -99,14 +99,14 @@ class _LocalAudioState extends State<LocalAudio> {
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
             decoration: BoxDecoration(
-              color: const Color(0xff2c2c2c).withAlpha(204),
+              color: Theme.of(context).colorScheme.primary.withAlpha(204), // Changed to theme primary color
               borderRadius: BorderRadius.circular(20),
             ),
             child: DropdownButton<String>(
               value: _selectedAudioName,
-              dropdownColor: const Color(0xff2c2c2c),
+              dropdownColor: Theme.of(context).colorScheme.primary, // Changed to theme primary color
               style: const TextStyle(color: Colors.white, fontSize: 18),
-              icon: const Icon(Icons.arrow_drop_down, color: Color(0xffe5b620)),
+              icon: Icon(Icons.arrow_drop_down, color: Theme.of(context).colorScheme.secondary), // Changed to theme secondary color
               underline: Container(),
               onChanged: (String? newValue) async {
                 if (newValue == null) return;
@@ -136,6 +136,8 @@ class _LocalAudioState extends State<LocalAudio> {
               final position = Duration(seconds: value.toInt());
               await _audioPlayer.seek(position);
             },
+            activeColor: Theme.of(context).colorScheme.secondary, // Added for theme consistency
+            inactiveColor: Theme.of(context).colorScheme.secondary.withOpacity(0.3), // Added for theme consistency
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -152,9 +154,11 @@ class _LocalAudioState extends State<LocalAudio> {
             children: [
               CircleAvatar(
                 radius: 35,
+                backgroundColor: Theme.of(context).colorScheme.primary, // Changed to theme primary color
                 child: IconButton(
                   icon: Icon(
                     _isPlaying ? Icons.pause : Icons.play_arrow,
+                    color: Theme.of(context).colorScheme.secondary, // Changed to theme secondary color
                   ),
                   iconSize: 50,
                   onPressed: () {
@@ -169,8 +173,10 @@ class _LocalAudioState extends State<LocalAudio> {
               const SizedBox(width: 20),
               CircleAvatar(
                 radius: 35,
+                backgroundColor: Theme.of(context).colorScheme.primary, // Changed to theme primary color
                 child: IconButton(
-                  icon: const Icon(Icons.stop),
+                  icon: Icon(Icons.stop,
+                    color: Theme.of(context).colorScheme.secondary,), // Changed to theme secondary color
                   iconSize: 50,
                   onPressed: () {
                     _audioPlayer.stop();
